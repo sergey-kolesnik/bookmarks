@@ -22,14 +22,14 @@ def user_login(request: HttpRequest):
                     login(request, user)
                     return HttpResponse("Authenticated sus=ccessfully")
                 else:
-                    return HttpResponse("Disabled account")
+                    return HttpResponse("Disabled account", status=403)
             else:
-                return HttpResponse("invalid login")
-        else:
-            form = LoginForm()
+                return HttpResponse("invalid login", status=401)
+    else:
+        form = LoginForm()
         return render(
             request,
-            "account/lohin.html",
+            "account/login.html",
             {
                 "form": form
             }
