@@ -4,10 +4,11 @@ from django.http import (
     HttpRequest,
 )
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
 
 
-def user_login(request: HttpRequest):
+def user_login(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -34,3 +35,14 @@ def user_login(request: HttpRequest):
                 "form": form
             }
         )
+
+
+@login_required
+def dashboard(request: HttpRequest) -> HttpResponse:
+    return render(
+        request,
+        "account/dashboard.html",
+        {
+            "section": "dashboard"
+        }
+    )
